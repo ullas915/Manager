@@ -43,12 +43,12 @@ public class SecurityConfig {
                 .cors(withDefaults())//to allow access from frontend
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/register").permitAll()
+                                .requestMatchers("/login", "/register").permitAll()
 //                        .requestMatchers(HttpMethod.GET, "/api/notes/**").authenticated()
 //                        .requestMatchers(HttpMethod.POST, "/api/notes/**").authenticated()
 //                        .requestMatchers(HttpMethod.DELETE, "/api/notes/**").authenticated() // ✅ allow delete
 //                        .requestMatchers(HttpMethod.PUT, "/api/notes/**").authenticated()    // ✅ allow update
-                        .anyRequest().authenticated()
+                                .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -67,20 +67,20 @@ public class SecurityConfig {
     }
 
 
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
 
-
-
     //to allow access form frontend
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:5173")); //for the specific frontend
+        config.setAllowedOrigins(List.of(
+                "http://localhost:5173", //localhost reactJs project
+                "https://managerfe.onrender.com" // ✅ allow live frontend  ,deployed reactJs project
+        ));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
