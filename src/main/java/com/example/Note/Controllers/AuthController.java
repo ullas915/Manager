@@ -15,6 +15,11 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
+    @GetMapping
+    public String healthCheck(){
+        return "live";
+    }
+
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody User user) {
         return authService.register(user);
